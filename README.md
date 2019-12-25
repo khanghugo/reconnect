@@ -1,5 +1,5 @@
 # reconnect
-reconnect to your wifi
+reconnect to your wifi when your connection drops
 
 only works on windows
 
