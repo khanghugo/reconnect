@@ -1,14 +1,21 @@
 # reconnect
-reconnect to your wifi when your connection drops
 
-only works on windows
+**THIS CAN DO**
 
-~not fully optimized due to the subprocess module is not really quick. i may change it to another module.~
+Reconnect to your wifi when your connection drops
 
-NOT ANYMORE BECAUSE I USE A NEW MODULE FOR THAT. `pip install pythonping` to proceed
+**HOW TO USE**
 
-right now, there are two methods to do that in the code and I have pythonping as the default. it is simply faster.
+Right now, it only works on Windows due to the differences of network driver.
 
-**read all the comments to tweak the script**
+In order to run the script, open Command Prompt and `pip install pythonping`
 
-there is a known issue, if you try to connect to another network while is script is running, there will be dropped packets during the process; and thus, you won't be able to connect back to your network. Right now, turn off the script while using other network or change the name in the script
+It is expected to run out of the box, you can do some modifications if you want because I leave lots of comments for you to read
+
+**KNOWN ISSUES**
+
+When the script is running, if you connect to another network, you won't be able to do so because that makes the connection drops for a brief moment, which triggers a reconnect to the (previous) network
+
+`pythonping` method is dedicated to ping domains, I have tried to use more organic methods like `subprocess` but it is simply too slow. Maybe I will develop one for my own in the future
+
+Notice how I rhymes these headings
