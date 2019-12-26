@@ -15,8 +15,26 @@ ignoreTime = 0.5
 winBeep = [440, 250]
 errorMessage = ['General failure', 'Destination host unreachable', 'Request timed out'] # this may not needed because pythonping method doesn't need to check errors
 
+
+# gimmick finding your network name
+showinterfacesCommand = 'netsh wlan show interfaces'.split()
+resultNetworkName = str(subprocess.Popen(showinterfacesCommand,stdout=subprocess.PIPE).communicate())
+
+def findNetworkName():
+	# I have to cut the list due to ""MATCHES"" in the ketwords. There are two connection types which are Auto Connect (when you tick auto connect in the browsing menu) and Profile (when you don't). So when we try to search for the profile of our network, there should come two results. Therefore, I cut it to get the right one. Alternatively, I can just use the second output but I think is is good enough
+	processed = resultNetworkName.split()[-20:]
+
+	for m in processed:
+		if "Profile" in m:
+			# this is simply trial-and-error. In the output, there are a lot of indentations and new line so skipping output can get us the result.
+			return processed[processed.index(m)+2]
+
+# if the networkName is default (yourNetwork) then the finding network name will be called and it will get your network name for the variable for other functions to call from. This is called once so there no need to worry a lot.
+if networkName == "yourNetwork" or not networkName:
+	networkName = findNetworkName()
+
 disconnectCommand = 'netsh wlan disconnect'.split()
-reconnectCommand = f'netsh wlan connect name="{networkName}"'.split()
+reconnectCommand = f'netsh wlan connect name="{networkName}"'.split() # the variable is still the final one or the one is defined from the very beginning
 
 # just a quick head-up
 print("Script started")
@@ -35,8 +53,8 @@ while True:
 
 		else:
 			# the reason why I came across the subprocess method was to hide the command prompt so it will not disturb you. Despite being slow, I think it is fast enough to connect back
-			subprocess.call(disconnectCommand)
-			subprocess.call(reconnectCommand)
+			subprocess.Popen(disconnectCommand)
+			subprocess.Popen(reconnectCommand)
 
 			winsound.Beep(winBeep[0], winBeep[1])
 
